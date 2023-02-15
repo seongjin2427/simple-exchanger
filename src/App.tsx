@@ -2,47 +2,46 @@ import React from "react";
 
 import Select from "./components/Select";
 import InputWrapper from "./components/InputWrapper";
-import { getExchangeRateByFromTo, getSymbols } from "./api/exchange";
-
-import "./App.css";
 import { useFromToChange } from "./hooks/useFromToExchange";
 import { useSymbol } from "./hooks/useSymbol";
+import { ExchangeSymbolType } from "./types/exchange";
+
+import "./App.css";
 
 function App() {
   const {
     from,
     to,
+    fromRef,
+    toRef,
     changeFromCode,
     changeFromHandler,
     changeToCode,
     changeToHandler,
+    isLoading,
   } = useFromToChange();
   const symbols = useSymbol();
 
-  const test = async () => {
-    if (to) {
-      const result = await getExchangeRateByFromTo({
-        from: from.code,
-        to: to.code,
-      });
+  const makeLabel = (label: ExchangeSymbolType) =>
+    `${label.description} ${label.code && "(" + label.code + ")"}`;
 
-      const result2 = await getSymbols();
-      console.log(result, result2);
-    }
-  };
+  const fromLabel = makeLabel(from);
+  const toLabel = makeLabel(to);
 
   return (
     <div className="App">
-      <button onClick={test}>테스트</button>
-
-      <InputWrapper value={from.value} onChange={changeFromHandler}>
+      <InputWrapper
+        ref={fromRef}
+        onChange={changeFromHandler}
+        value={from.value}
+      >
         <Select dataSet={symbols} onClick={changeFromCode}>
-          {from.description} {from.code && `(${from.code})`}
+          {isLoading ? <div>Loading...</div> : fromLabel}
         </Select>
       </InputWrapper>
-      <InputWrapper value={to.value} onChange={changeToHandler}>
+      <InputWrapper ref={toRef} onChange={changeToHandler} value={to.value}>
         <Select dataSet={symbols} onClick={changeToCode}>
-          {to.description} {to.code && `(${to.code})`}
+          {isLoading ? <div>Loading...</div> : toLabel}
         </Select>
       </InputWrapper>
     </div>

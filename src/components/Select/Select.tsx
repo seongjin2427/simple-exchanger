@@ -13,6 +13,7 @@ interface Props {
 
 const Select = ({ children, onClick, dataSet }: Props) => {
   const [isOpen, setIsOpen] = React.useState(false);
+  const targetRef = React.useRef<HTMLDivElement>(null);
 
   const toggleOpen = (bool: boolean) => setIsOpen(bool);
   const clickHandler = (symbol: ExchangeSymbolType) => {
@@ -20,8 +21,25 @@ const Select = ({ children, onClick, dataSet }: Props) => {
     toggleOpen(false);
   };
 
+  React.useEffect(() => {
+    const pageClickEvent = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (targetRef.current && !targetRef.current.contains(target)) {
+        toggleOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      window.addEventListener("click", pageClickEvent);
+    }
+
+    return () => {
+      window.removeEventListener("click", pageClickEvent);
+    };
+  }, [isOpen]);
+
   return (
-    <Styled.Container>
+    <Styled.Container ref={targetRef}>
       <Styled.Button onClick={() => toggleOpen(!isOpen)}>
         {children}
         {isOpen ? (
