@@ -1,31 +1,37 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import { getExchangeRateByFromTo, getSymbols } from "./api/exchange";
+import Select from "./components/Select";
+import { ExchangeSymbolType } from "./types/exchange";
+
+type ExchangeInfoType = ExchangeSymbolType & { value?: string };
 
 function App() {
+  const [from, setFrom] = React.useState<ExchangeInfoType>({
+    description: "South Korean Won",
+    code: "KRW",
+    value: "",
+  });
+  const [to, setTo] = React.useState({
+    description: "United States Dollar",
+    code: "USD",
+    value: "",
+  });
+
   const test = async () => {
-    const result = await getExchangeRateByFromTo({ from: "USD", to: "KRW" });
+    const result = await getExchangeRateByFromTo({
+      from: from.code,
+      to: to.code,
+    });
     const result2 = await getSymbols();
     console.log(result, result2);
   };
+
   return (
     <div className="App">
       <button onClick={test}>테스트</button>
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <Select>Select</Select>
     </div>
   );
 }
