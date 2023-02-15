@@ -1,22 +1,32 @@
 import React from "react";
-import "./App.css";
-import { getExchangeRateByFromTo, getSymbols } from "./api/exchange";
+
 import Select from "./components/Select";
+import InputWrapper from "./components/InputWrapper";
 import { ExchangeSymbolType } from "./types/exchange";
+import { getExchangeRateByFromTo, getSymbols } from "./api/exchange";
+
+import "./App.css";
 
 type ExchangeInfoType = ExchangeSymbolType & { value?: string };
 
 function App() {
   const [from, setFrom] = React.useState<ExchangeInfoType>({
-    description: "South Korean Won",
-    code: "KRW",
+    description: "Select",
+    code: "",
     value: "",
   });
   const [to, setTo] = React.useState({
-    description: "United States Dollar",
-    code: "USD",
+    description: "Select",
+    code: "",
     value: "",
   });
+
+  const changeFromHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const regexp = /^[0-9]+$/;
+    const value = e.target.value;
+
+    if (regexp.test(value)) setFrom({ ...from, value });
+  };
 
   const test = async () => {
     const result = await getExchangeRateByFromTo({
@@ -31,7 +41,16 @@ function App() {
     <div className="App">
       <button onClick={test}>테스트</button>
 
-      <Select>Select</Select>
+      <InputWrapper value={from.value} onChange={changeFromHandler}>
+        <Select>
+          {from.description} {from.code ?? `(${from.code})`}
+        </Select>
+      </InputWrapper>
+      <InputWrapper defaultValue={to.value}>
+        <Select>
+          {to.description} {to.code ?? `(${to.code})`}
+        </Select>
+      </InputWrapper>
     </div>
   );
 }
