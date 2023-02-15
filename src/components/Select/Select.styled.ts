@@ -32,12 +32,14 @@ const List = styled.ul<{ isOpen: boolean }>`
     display: ${isOpen ? "block" : "none"};
   `}
   width: 100%;
+  max-height: 15rem;
   position: absolute;
   top: 3rem;
   left: 0;
   background: #ffffff;
   border: 1px solid #aaaaaa;
   border-radius: 0.25rem;
+  overflow: scroll;
   z-index: 1;
 `;
 

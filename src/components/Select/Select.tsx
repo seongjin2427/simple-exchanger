@@ -8,14 +8,10 @@ import { ExchangeSymbolType } from "../../types/exchange";
 interface Props {
   children?: React.ReactNode;
   onClick?: (s: ExchangeSymbolType) => void;
+  dataSet?: ExchangeSymbolType[];
 }
 
-const sample = [
-  { description: "United States Doller", code: "USD" },
-  { description: "South Korea Won", code: "KRW" },
-];
-
-const Select = ({ children, onClick }: Props) => {
+const Select = ({ children, onClick, dataSet }: Props) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const toggleOpen = (bool: boolean) => setIsOpen(bool);
@@ -35,15 +31,16 @@ const Select = ({ children, onClick }: Props) => {
         )}
       </Styled.Button>
       <Styled.List isOpen={isOpen}>
-        {sample.map(({ description, code }) => (
-          <Styled.Item key={code}>
-            <Styled.ItemButton
-              onClick={() => clickHandler({ description, code })}
-            >
-              {description} ({code})
-            </Styled.ItemButton>
-          </Styled.Item>
-        ))}
+        {dataSet &&
+          dataSet.map(({ description, code }) => (
+            <Styled.Item key={code}>
+              <Styled.ItemButton
+                onClick={() => clickHandler({ description, code })}
+              >
+                {description} ({code})
+              </Styled.ItemButton>
+            </Styled.Item>
+          ))}
       </Styled.List>
     </Styled.Container>
   );

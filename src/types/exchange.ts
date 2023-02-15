@@ -12,7 +12,7 @@ interface ExchangeSymbolType {
 interface SymbolResponseType {
   success: boolean;
   symbols: {
-    [key: string]: Record<string, ExchangeSymbolType>[];
+    [key: string]: ExchangeSymbolType;
   };
 }
 
