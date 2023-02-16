@@ -1,12 +1,11 @@
 import React from "react";
 
+import Card from "./components/Card";
 import Select from "./components/Select";
 import InputWrapper from "./components/InputWrapper";
 import { useFromToChange } from "./hooks/useFromToExchange";
 import { useSymbol } from "./hooks/useSymbol";
 import { ExchangeSymbolType } from "./types/exchange";
-
-import "./App.css";
 
 function App() {
   const {
@@ -23,13 +22,16 @@ function App() {
   const symbols = useSymbol();
 
   const makeLabel = (label: ExchangeSymbolType) =>
-    `${label.description} ${label.code && "(" + label.code + ")"}`;
+    `${label.description} ${label.code && `(${label.code})`}`;
 
   const fromLabel = makeLabel(from);
   const toLabel = makeLabel(to);
 
   return (
-    <div className="App">
+    <Card
+      title="간단 환율계산기"
+      description="국가를 선택하고 금액을 입력하여 환율을 변경해보세요!"
+    >
       <InputWrapper
         ref={fromRef}
         onChange={changeFromHandler}
@@ -39,12 +41,17 @@ function App() {
           {isLoading ? <div>Loading...</div> : fromLabel}
         </Select>
       </InputWrapper>
-      <InputWrapper ref={toRef} onChange={changeToHandler} value={to.value}>
+      <InputWrapper
+        ref={toRef}
+        onChange={changeToHandler}
+        value={to.value}
+        readOnly
+      >
         <Select dataSet={symbols} onClick={changeToCode}>
           {isLoading ? <div>Loading...</div> : toLabel}
         </Select>
       </InputWrapper>
-    </div>
+    </Card>
   );
 }
 

@@ -41,7 +41,7 @@ const useFromToChange = () => {
 
   React.useEffect(() => {
     const fromValue = from.value === undefined ? 0 : +from.value;
-    const calculatedValue = fromValue * exchangeRate + "";
+    const calculatedValue = (fromValue * exchangeRate).toFixed(4);
 
     setTo((prev) => ({ ...prev, value: calculatedValue }));
   }, [from.value, exchangeRate]);

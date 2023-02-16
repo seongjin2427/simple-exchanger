@@ -7,6 +7,7 @@ const Container = styled.div`
 
   * {
     font-size: 1.125rem;
+    font-weight: 400;
   }
 `;
 
@@ -43,7 +44,7 @@ const List = styled.ul<{ isOpen: boolean }>`
   z-index: 1;
 `;
 
-const Item = styled.li`
+const Item = styled.li<{ current: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -52,6 +53,13 @@ const Item = styled.li`
   :hover {
     background: #eeeeee;
   }
+
+  ${({ current }) =>
+    current &&
+    css`
+      background: #eeeeee;
+      font-weight: bold;
+    `}
 `;
 
 const ItemButton = styled.button`

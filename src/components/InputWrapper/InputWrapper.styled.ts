@@ -5,11 +5,11 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   border: 1px solid #aaaaaa;
-  border-right: none;
+  border-radius: 0.25rem;
 `;
 
 const Input = styled.input`
-  width: 100%;
+  width: 15rem;
   height: 2.25rem;
   padding: 0 0.75rem;
   border: none;

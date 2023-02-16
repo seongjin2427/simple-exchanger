@@ -38,6 +38,13 @@ const Select = ({ children, onClick, dataSet }: Props) => {
     };
   }, [isOpen]);
 
+  const current = React.useMemo(() => {
+    if (typeof children === "string") {
+      const index = children.indexOf("(");
+      return children.substring(index + 1, index + 4);
+    }
+  }, [children]);
+
   return (
     <Styled.Container ref={targetRef}>
       <Styled.Button onClick={() => toggleOpen(!isOpen)}>
@@ -51,7 +58,7 @@ const Select = ({ children, onClick, dataSet }: Props) => {
       <Styled.List isOpen={isOpen}>
         {dataSet &&
           dataSet.map(({ description, code }) => (
-            <Styled.Item key={code}>
+            <Styled.Item key={code} current={current === code}>
               <Styled.ItemButton
                 onClick={() => clickHandler({ description, code })}
               >
