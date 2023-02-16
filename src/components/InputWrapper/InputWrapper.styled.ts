@@ -22,6 +22,10 @@ const Input = styled.input`
     -webkit-appearance: none;
     margin: 0;
   }
+
+  :read-only {
+    color: #cccccc;
+  }
 `;
 
 export { Container, Input };
