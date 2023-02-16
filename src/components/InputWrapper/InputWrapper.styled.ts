@@ -9,7 +9,7 @@ const Container = styled.div`
 `;
 
 const Input = styled.input`
-  width: 15rem;
+  width: 12.5rem;
   height: 2.25rem;
   padding: 0 0.75rem;
   border: none;
