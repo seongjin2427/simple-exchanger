@@ -21,9 +21,6 @@ const useFromToChange = () => {
     value: "0",
   });
 
-  const fromRef = React.useRef<HTMLInputElement>(null);
-  const toRef = React.useRef<HTMLInputElement>(null);
-
   React.useEffect(() => {
     (async function () {
       setIsLoading(true);
@@ -66,8 +63,6 @@ const useFromToChange = () => {
   return {
     from,
     to,
-    fromRef,
-    toRef,
     changeFromHandler,
     changeFromCode,
     changeToHandler,

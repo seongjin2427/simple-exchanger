@@ -11,8 +11,6 @@ function App() {
   const {
     from,
     to,
-    fromRef,
-    toRef,
     changeFromCode,
     changeFromHandler,
     changeToCode,
@@ -32,21 +30,12 @@ function App() {
       title="간단 환율계산기"
       description="국가를 선택하고 금액을 입력하여 환율을 변경해보세요!"
     >
-      <InputWrapper
-        ref={fromRef}
-        onChange={changeFromHandler}
-        value={from.value}
-      >
+      <InputWrapper onChange={changeFromHandler} value={from.value}>
         <Select dataSet={symbols} onClick={changeFromCode}>
           {isLoading ? <div>Loading...</div> : fromLabel}
         </Select>
       </InputWrapper>
-      <InputWrapper
-        ref={toRef}
-        onChange={changeToHandler}
-        value={to.value}
-        readOnly
-      >
+      <InputWrapper onChange={changeToHandler} value={to.value} readOnly>
         <Select dataSet={symbols} onClick={changeToCode}>
           {isLoading ? <div>Loading...</div> : toLabel}
         </Select>
